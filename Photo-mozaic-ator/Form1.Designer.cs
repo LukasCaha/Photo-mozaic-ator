@@ -154,7 +154,7 @@ namespace Photo_mozaic_ator
             this.Controls.Add(this.createMozaicButton);
             this.Controls.Add(this.titleLabel);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Photo-mozaic-ator";
             ((System.ComponentModel.ISupportInitialize)(this.doneMozaic)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

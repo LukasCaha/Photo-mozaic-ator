@@ -106,8 +106,33 @@ Tyto poznámky slouží pro mě, abych nezapomněl všechny související inform
 
 # Prototyp aplikace
 
+## 27.8. 2020
+
 Pro aplikaci jsem sestrojil prototyp, abych si odzkoušel různé mechaniky. Příklad výstupního obrázku http://lukascaha.com/example.png
 
 Je patrný nedostatek s opakujícími se obličeji, hlavně v extrémních případech jako je světlá/tmavá místa. Detailní plochy vypadají rozumně.
 
 Konverze 1920x1080 trvala na mém PC 8s. Implementace není optimální, ale výkon PC je vyšší než průměr. Délka generování sady kamínků je také podstatně vyšší, případně při prvním setupu je nutné buď poslat s programem sady nebo je nechat vygenerovat. Sada 10000 obličejů (1024x1024px) se mi skriptem stahovala 3h a zabrala 5GB. Po redukci na paletu se kterou byla vytvořena tato mozaika je složka veliká <10MB.
+
+## 4.3. 2021
+
+Aplikace je nyní v WFA. Je implementovaná funkcionalita tvorby kamínků a následné generování mozaik.
+
+![image-20210304233923828](C:\Users\Lukas\AppData\Roaming\Typora\typora-user-images\image-20210304233923828.png)
+
+### Příklady
+
+#### Předtím 
+![Penguins](C:\Users\Public\Pictures\Sample Pictures\Penguins.jpg)
+#### Potom
+![B06C0](C:\Users\Lukas\source\repos\Photo-mozaic-ator\Photo-mozaic-ator\working_dir\B06C0.png)
+
+------
+
+#### Předtím 
+
+![Koala](C:\Users\Public\Pictures\Sample Pictures\Koala.jpg)
+
+#### Potom
+
+![67AF5](C:\Users\Lukas\source\repos\Photo-mozaic-ator\Photo-mozaic-ator\working_dir\67AF5.png)
