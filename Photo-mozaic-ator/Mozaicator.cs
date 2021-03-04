@@ -11,9 +11,9 @@ namespace Photo_mozaic_ator
         public static string FindClosestColorAndReturnImageName(ref Bitmap targetImage, int offsetX, int offsetY)
         {
             int red = 0, green = 0, blue = 0;
-            for (int x = 0; x < 16; x++)
+            for (int x = 0; x < AplicationStatus.tileSize; x++)
             {
-                for (int y = 0; y < 16; y++)
+                for (int y = 0; y < AplicationStatus.tileSize; y++)
                 {
                     Color c = targetImage.GetPixel(offsetX + x, offsetY + y);
                     red += c.R;
@@ -23,9 +23,10 @@ namespace Photo_mozaic_ator
             }
 
             //normalizing
-            red /= 16 * 16;
-            green /= 16 * 16;
-            blue /= 16 * 16;
+            int tileSizeSquared = (int)Math.Pow(AplicationStatus.tileSize, 2);
+            red /= tileSizeSquared;
+            green /= tileSizeSquared;
+            blue /= tileSizeSquared;
 
             //snapping to 8*8*8 color pallete (512 colors)
             const int factor = 4;
@@ -48,7 +49,7 @@ namespace Photo_mozaic_ator
             string temp = filename;
 
             //if file exists return
-            if (File.Exists(@"faces by color down 4\" + filename))
+            if (File.Exists(@"pokemon_tiles/" + filename))
             {
                 return filename;
             }
@@ -63,7 +64,7 @@ namespace Photo_mozaic_ator
                     }
                 }
 
-                DirectoryInfo dir = new DirectoryInfo(@"faces by color down 4");  //dir with colors
+                DirectoryInfo dir = new DirectoryInfo(@"pokemon_tiles");  //dir with colors
 
                 //find minimum
                 int minimum = int.MaxValue;

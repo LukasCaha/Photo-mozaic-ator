@@ -22,4 +22,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="working_dir\pokemon_tiles\" />
+  </ItemGroup>
+
 </Project>

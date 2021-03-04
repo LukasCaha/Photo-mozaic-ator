@@ -16,6 +16,7 @@ namespace Photo_mozaic_ator
         public Form1()
         {
             InitializeComponent();
+            SetStatus(Directory.GetCurrentDirectory());
         }
 
         #region Create Mozaic
@@ -55,16 +56,17 @@ namespace Photo_mozaic_ator
             }
             string source = AplicationStatus.inputFile;
 
-            Image targetImage = Image.FromFile(source);
+            Image fromFile = Image.FromFile(source);
+            Image targetImage = Mozaicator.ResizeImage(fromFile, fromFile.Width * AplicationStatus.imageScale, fromFile.Height * AplicationStatus.imageScale);
 
             int width = targetImage.Width;
             int height = targetImage.Height;
 
-            int horizontalFaces = width / 16;
-            int verticalFaces = height / 16;
+            int horizontalFaces = width / AplicationStatus.tileSize;
+            int verticalFaces = height / AplicationStatus.tileSize;
 
-            int overflowWidth = width % 16;
-            int overflowHeight = height % 16;
+            int overflowWidth = width % AplicationStatus.tileSize;
+            int overflowHeight = height % AplicationStatus.tileSize;
 
             Bitmap generatedImage = new Bitmap(width - overflowWidth, height - overflowHeight);
 
@@ -75,7 +77,7 @@ namespace Photo_mozaic_ator
                 for (int y = 0; y < verticalFaces; y++)
                 {
                     //find color of region (filename)
-                    string filename = Mozaicator.FindClosestColorAndReturnImageName(ref b, x * 16, y * 16);
+                    string filename = Mozaicator.FindClosestColorAndReturnImageName(ref b, x * AplicationStatus.tileSize, y * AplicationStatus.tileSize);
 
                     //load file to bitmap
                     Bitmap selectedFace;
@@ -87,17 +89,16 @@ namespace Photo_mozaic_ator
                     //{
                     //    selectedFace = (Bitmap)Image.FromFile("blank.bmp");
                     //}
-                    selectedFace = (Bitmap)Image.FromFile(@"faces by color down 4\" + filename);
+                    selectedFace = (Bitmap)Image.FromFile(@"pokemon_tiles/" + filename);
 
-                    Mozaicator.CopyRegionIntoImage(selectedFace, new Rectangle(0, 0, 16, 16), ref generatedImage, new Rectangle(new Point(x * 16, y * 16), new Size(16, 16)));
+                    Mozaicator.CopyRegionIntoImage(selectedFace, new Rectangle(0, 0, AplicationStatus.tileSize, AplicationStatus.tileSize), ref generatedImage, new Rectangle(new Point(x * AplicationStatus.tileSize, y * AplicationStatus.tileSize), new Size(AplicationStatus.tileSize, AplicationStatus.tileSize)));
                 }
 
                 worker.ReportProgress((int)(++progress * 100.0f / horizontalFaces));
             }
             worker.ReportProgress(100);
             AplicationStatus.outputImage = generatedImage;
-            if (AplicationStatus.outputFile != null)
-                generatedImage.Save(AplicationStatus.outputFile);
+            generatedImage.Save(AplicationStatus.GetOutputFile());
         }
 
         // This event handler updates the progress.
@@ -139,8 +140,14 @@ namespace Photo_mozaic_ator
         {
             BackgroundWorker worker = sender as BackgroundWorker;
 
+            //for each of 10000 images
+            int images = 899;
+            for (int imageNum = 1; imageNum < 899; imageNum++)
+            {
+                StoneGenerator.GenerateOneTile(imageNum);
+                worker.ReportProgress((int)(imageNum * 100.0f / images));
+            }
             worker.ReportProgress(100);
-
         }
 
         private void StoneGeneratingWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)

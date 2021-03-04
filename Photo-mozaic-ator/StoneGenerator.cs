@@ -1,62 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Text;
 
 namespace Photo_mozaic_ator
 {
     class StoneGenerator
     {
-        public void Generate()
+        public static void GenerateOneTile(int imageNum)
         {
-            //for each of 10000 images
-            for (int imageNum = 0; imageNum < 10000; imageNum++)
+            //load image
+            Image face = Image.FromFile(AplicationStatus.workingDirectory + @"pokemon/pokemon " + imageNum + ".png");
+
+            //scale down to 16x16 px
+            Bitmap smallFace = (Bitmap)Mozaicator.ResizeImage(face, AplicationStatus.tileSize, AplicationStatus.tileSize);
+
+            //determine single color representing face
+            int red = 0, green = 0, blue = 0;
+            //transparent images tiles fix
+            int blackPixels = 0;
+            //fix end
+            for (int x = 0; x < AplicationStatus.tileSize; x++)
             {
-                if (imageNum % 1000 == 0)
+                for (int y = 0; y < AplicationStatus.tileSize; y++)
                 {
-                    Console.WriteLine(imageNum);
+                    Color c = smallFace.GetPixel(x, y);
+                    if (c.R == 0 && c.G == 0 && c.B == 0) blackPixels++;
+                    red += c.R;
+                    green += c.G;
+                    blue += c.B;
                 }
-                //load image
-                Image face = Image.FromFile("10000 faces\\image" + imageNum + ".png");
-
-                //scale down to 16x16 px
-                Bitmap smallFace = (Bitmap)Mozaicator.ResizeImage(face, 16, 16);
-
-                //determine single color representing face
-                int red = 0, green = 0, blue = 0;
-                for (int x = 0; x < 16; x++)
-                {
-                    for (int y = 0; y < 16; y++)
-                    {
-                        Color c = smallFace.GetPixel(x, y);
-                        red += c.R;
-                        green += c.G;
-                        blue += c.B;
-                    }
-                }
-                //normalizing
-                red /= 16 * 16;
-                green /= 16 * 16;
-                blue /= 16 * 16;
-
-                //snapping to 8*8*8 color pallete (512 colors)
-                const int factor = 4;
-                red /= factor;
-                red *= factor;
-                green /= factor;
-                green *= factor;
-                blue /= factor;
-                blue *= factor;
-
-                Color representingColor = Color.FromArgb(255, red, green, blue);
-
-                //save as #RRGGBB.bmp
-                string name = "";
-                name += (red + 256).ToString("X").Substring(1);
-                name += (green + 256).ToString("X").Substring(1);
-                name += (blue + 256).ToString("X").Substring(1);
-                smallFace.Save("faces by color down 4\\#" + name + ".bmp");
             }
+            //normalizing
+            int tileSizeSquared = (int)Math.Pow(AplicationStatus.tileSize, 2);
+            red /= tileSizeSquared - blackPixels;
+            green /= tileSizeSquared - blackPixels;
+            blue /= tileSizeSquared - blackPixels;
+
+            //snapping to 8*8*8 color pallete (512 colors)
+            red /= AplicationStatus.normalizingFactor;
+            red *= AplicationStatus.normalizingFactor;
+            green /= AplicationStatus.normalizingFactor;
+            green *= AplicationStatus.normalizingFactor;
+            blue /= AplicationStatus.normalizingFactor;
+            blue *= AplicationStatus.normalizingFactor;
+
+            //save as #RRGGBB.bmp
+            string name = "";
+            name += (red + 256).ToString("X").Substring(1);
+            name += (green + 256).ToString("X").Substring(1);
+            name += (blue + 256).ToString("X").Substring(1);
+            var i2 = new Bitmap(smallFace);
+            string savePath = AplicationStatus.workingDirectory + @"pokemon_tiles/#" + name + ".bmp";
+            i2.Save(savePath, ImageFormat.Bmp);
         }
     }
 }
