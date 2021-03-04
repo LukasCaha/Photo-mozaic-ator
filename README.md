@@ -130,11 +130,6 @@ Aplikace je nyní v WFA. Je implementovaná funkcionalita tvorby kamínků a ná
 ------
 
 #### Předtím 
-
 ![koala original](http://lukascaha.com/github_img/Koala.jpg)
-
-#### Potom![B06C0](https://user-images.githubusercontent.com/29759044/110041590-9ec6aa00-7d44-11eb-97fb-8b79df3bc95b.png)
-
-
-![koala mozaic](http://lukascaha.com/github_img/67AF5.png)
+#### Potom
 ![koala mozaic](https://user-images.githubusercontent.com/29759044/110041577-953d4200-7d44-11eb-88fa-174fd505d6ad.png)
