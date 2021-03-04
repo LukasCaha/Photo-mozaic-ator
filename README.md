@@ -118,21 +118,23 @@ Konverze 1920x1080 trvala na mém PC 8s. Implementace není optimální, ale vý
 
 Aplikace je nyní v WFA. Je implementovaná funkcionalita tvorby kamínků a následné generování mozaik.
 
-![image-20210304233923828](http://lukascaha.com/github_img/image-20210304233923828.png)
+![application screenshot](http://lukascaha.com/github_img/image-20210304233923828.png)
 
 ### Příklady
 
 #### Předtím 
-![Penguins](http://lukascaha.com/github_img/Penguins.jpg)
+![penguins original](http://lukascaha.com/github_img/Penguins.jpg)
 #### Potom
-![B06C0](http://lukascaha.com/github_img/B06C0.png)
+![penguins mozaic](http://lukascaha.com/github_img/B06C0.png)
 
 ------
 
 #### Předtím 
 
-![Koala](http://lukascaha.com/github_img/Koala.jpg)
+![koala original](http://lukascaha.com/github_img/Koala.jpg)
 
-#### Potom
+#### Potom![B06C0](https://user-images.githubusercontent.com/29759044/110041590-9ec6aa00-7d44-11eb-97fb-8b79df3bc95b.png)
 
-![67AF5](http://lukascaha.com/github_img/67AF5.png)
+
+![koala mozaic](http://lukascaha.com/github_img/67AF5.png)
+![koala mozaic](https://user-images.githubusercontent.com/29759044/110041577-953d4200-7d44-11eb-88fa-174fd505d6ad.png)
