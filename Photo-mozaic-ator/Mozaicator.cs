@@ -49,7 +49,7 @@ namespace Photo_mozaic_ator
             string temp = filename;
 
             //if file exists return
-            if (File.Exists(@"pokemon_tiles/" + filename))
+            if (File.Exists(AplicationStatus.existingTilesetDir + filename))
             {
                 return filename;
             }
@@ -64,7 +64,7 @@ namespace Photo_mozaic_ator
                     }
                 }
 
-                DirectoryInfo dir = new DirectoryInfo(@"pokemon_tiles");  //dir with colors
+                DirectoryInfo dir = new DirectoryInfo(AplicationStatus.existingTilesetDir);  //dir with colors
 
                 //find minimum
                 int minimum = int.MaxValue;

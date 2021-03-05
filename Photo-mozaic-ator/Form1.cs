@@ -16,7 +16,9 @@ namespace Photo_mozaic_ator
         public Form1()
         {
             InitializeComponent();
-            SetStatus(Directory.GetCurrentDirectory());
+            //SetStatus(Directory.GetCurrentDirectory());
+            tilesetDestinationDialog.SelectedPath = Path.GetFullPath(AplicationStatus.workingDirectory);
+            tilesetSourceDialog.SelectedPath = Path.GetFullPath(AplicationStatus.workingDirectory);
         }
 
         #region Create Mozaic
@@ -89,7 +91,7 @@ namespace Photo_mozaic_ator
                     //{
                     //    selectedFace = (Bitmap)Image.FromFile("blank.bmp");
                     //}
-                    selectedFace = (Bitmap)Image.FromFile(@"pokemon_tiles/" + filename);
+                    selectedFace = (Bitmap)Image.FromFile(AplicationStatus.existingTilesetDir +"/" + filename);
 
                     Mozaicator.CopyRegionIntoImage(selectedFace, new Rectangle(0, 0, AplicationStatus.tileSize, AplicationStatus.tileSize), ref generatedImage, new Rectangle(new Point(x * AplicationStatus.tileSize, y * AplicationStatus.tileSize), new Size(AplicationStatus.tileSize, AplicationStatus.tileSize)));
                 }
@@ -177,26 +179,40 @@ namespace Photo_mozaic_ator
         {
             AplicationStatus.inputFile = openFileDialog.FileName;
         }
-
         private void saveFileDialog_FileOk(object sender, CancelEventArgs e)
         {
             AplicationStatus.outputFile = saveFileDialog.FileName;
         }
-
         private void openFile_Click(object sender, EventArgs e)
         {
             openFileDialog.ShowDialog();
         }
-
         private void saveFile_Click(object sender, EventArgs e)
         {
             saveFileDialog.ShowDialog();
+        }
+        private void chooseSetDestinationButton_Click(object sender, EventArgs e)
+        {
+            if(tilesetDestinationDialog.ShowDialog() == DialogResult.OK)
+            {
+                SetStatus(tilesetDestinationDialog.SelectedPath);
+                AplicationStatus.newTilesetDir = tilesetDestinationDialog.SelectedPath;
+            }
         }
         #endregion
 
         private void SetStatus<T>(T status)
         {
             statusBar.Text = "Status: " + status.ToString();
+        }
+
+        private void chooseTilesetButton_Click(object sender, EventArgs e)
+        {
+            if (tilesetSourceDialog.ShowDialog() == DialogResult.OK)
+            {
+                SetStatus(tilesetSourceDialog.SelectedPath);
+                AplicationStatus.existingTilesetDir = tilesetSourceDialog.SelectedPath;
+            }
         }
     }
 }

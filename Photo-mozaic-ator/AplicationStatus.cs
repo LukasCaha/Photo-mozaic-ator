@@ -13,6 +13,8 @@ namespace Photo_mozaic_ator
 
         public static string inputFile { get; set; }
         public static string outputFile;
+        public static string newTilesetDir;
+        public static string existingTilesetDir;
         public static Bitmap outputImage { get; set; }
         public static int imageScale { get; set; }
 
@@ -25,6 +27,8 @@ namespace Photo_mozaic_ator
             workingDirectory = @"./";
             inputFile = null;
             outputFile = null;
+            newTilesetDir = null;
+            newTilesetDir = null;
             tileSize = 96;
             normalizingFactor = 1;
             imageScale = 8;
@@ -37,6 +41,15 @@ namespace Photo_mozaic_ator
                 return workingDirectory + randomGenerator.Next(0, (int)Math.Pow(2,20)).ToString("X")+".png";
             }
             return outputFile;
+        }
+
+        public static string GetExistingTilesetDir()
+        {
+            if (existingTilesetDir == null)
+            {
+                return workingDirectory + @"faces by color down 4";
+            }
+            return existingTilesetDir;
         }
     }
 }

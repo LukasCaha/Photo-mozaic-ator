@@ -52,7 +52,7 @@ namespace Photo_mozaic_ator
             name += (green + 256).ToString("X").Substring(1);
             name += (blue + 256).ToString("X").Substring(1);
             var i2 = new Bitmap(smallFace);
-            string savePath = AplicationStatus.workingDirectory + @"pokemon_tiles/#" + name + ".bmp";
+            string savePath = $"{AplicationStatus.newTilesetDir}/#{name}.bmp";
             i2.Save(savePath, ImageFormat.Bmp);
         }
     }

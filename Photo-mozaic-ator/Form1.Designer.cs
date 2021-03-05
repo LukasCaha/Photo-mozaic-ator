@@ -1,4 +1,6 @@
 ﻿
+using System.IO;
+
 namespace Photo_mozaic_ator
 {
     partial class Form1
@@ -41,6 +43,10 @@ namespace Photo_mozaic_ator
             this.saveFile = new System.Windows.Forms.Button();
             this.generateStonesButton = new System.Windows.Forms.Button();
             this.stoneGeneratingWorker = new System.ComponentModel.BackgroundWorker();
+            this.chooseSetDestinationButton = new System.Windows.Forms.Button();
+            this.tilesetDestinationDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.chooseTilesetButton = new System.Windows.Forms.Button();
+            this.tilesetSourceDialog = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.doneMozaic)).BeginInit();
             this.SuspendLayout();
             // 
@@ -125,7 +131,7 @@ namespace Photo_mozaic_ator
             // 
             // generateStonesButton
             // 
-            this.generateStonesButton.Location = new System.Drawing.Point(13, 45);
+            this.generateStonesButton.Location = new System.Drawing.Point(13, 74);
             this.generateStonesButton.Name = "generateStonesButton";
             this.generateStonesButton.Size = new System.Drawing.Size(281, 23);
             this.generateStonesButton.TabIndex = 6;
@@ -141,11 +147,39 @@ namespace Photo_mozaic_ator
             this.stoneGeneratingWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.StoneGeneratingWorker_ProgressChanged);
             this.stoneGeneratingWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.StoneGeneratingWorker_RunWorkerCompleted);
             // 
+            // chooseSetDestinationButton
+            // 
+            this.chooseSetDestinationButton.Location = new System.Drawing.Point(13, 45);
+            this.chooseSetDestinationButton.Name = "chooseSetDestinationButton";
+            this.chooseSetDestinationButton.Size = new System.Drawing.Size(281, 23);
+            this.chooseSetDestinationButton.TabIndex = 7;
+            this.chooseSetDestinationButton.Text = "Choose New Tileset directory";
+            this.chooseSetDestinationButton.UseVisualStyleBackColor = true;
+            this.chooseSetDestinationButton.Click += new System.EventHandler(this.chooseSetDestinationButton_Click);
+            // 
+            // tilesetDestinationDialog
+            // 
+            // 
+            // chooseTilesetButton
+            // 
+            this.chooseTilesetButton.Location = new System.Drawing.Point(13, 310);
+            this.chooseTilesetButton.Name = "chooseTilesetButton";
+            this.chooseTilesetButton.Size = new System.Drawing.Size(281, 23);
+            this.chooseTilesetButton.TabIndex = 8;
+            this.chooseTilesetButton.Text = "Tileset";
+            this.chooseTilesetButton.UseVisualStyleBackColor = true;
+            this.chooseTilesetButton.Click += new System.EventHandler(this.chooseTilesetButton_Click);
+            // 
+            // tilesetSourceDialog
+            // 
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.chooseTilesetButton);
+            this.Controls.Add(this.chooseSetDestinationButton);
             this.Controls.Add(this.generateStonesButton);
             this.Controls.Add(this.saveFile);
             this.Controls.Add(this.openFile);
@@ -174,6 +208,10 @@ namespace Photo_mozaic_ator
         private System.Windows.Forms.Button saveFile;
         private System.Windows.Forms.Button generateStonesButton;
         private System.ComponentModel.BackgroundWorker stoneGeneratingWorker;
+        private System.Windows.Forms.Button chooseSetDestinationButton;
+        private System.Windows.Forms.Button chooseTilesetButton;
+        public System.Windows.Forms.FolderBrowserDialog tilesetDestinationDialog;
+        public System.Windows.Forms.FolderBrowserDialog tilesetSourceDialog;
     }
 }
 
