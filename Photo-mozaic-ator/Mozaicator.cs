@@ -29,13 +29,12 @@ namespace Photo_mozaic_ator
             blue /= tileSizeSquared;
 
             //snapping to 8*8*8 color pallete (512 colors)
-            const int factor = 4;
-            red /= factor;
-            red *= factor;
-            green /= factor;
-            green *= factor;
-            blue /= factor;
-            blue *= factor;
+            red = (int)(red / AplicationStatus.snappingFactor);
+            red = (int)(red * AplicationStatus.snappingFactor);
+            green = (int)(green / AplicationStatus.snappingFactor);
+            green = (int)(green * AplicationStatus.snappingFactor);
+            blue = (int)(blue / AplicationStatus.snappingFactor);
+            blue = (int)(blue * AplicationStatus.snappingFactor);
 
             Color representingColor = Color.FromArgb(255, red, green, blue);
 

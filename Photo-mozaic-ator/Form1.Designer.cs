@@ -47,7 +47,14 @@ namespace Photo_mozaic_ator
             this.tilesetDestinationDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.chooseTilesetButton = new System.Windows.Forms.Button();
             this.tilesetSourceDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.imageScaleInput = new System.Windows.Forms.TextBox();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.snappingFactorInput = new System.Windows.Forms.TextBox();
+            this.tileSizeInput = new System.Windows.Forms.TextBox();
+            this.ignoreBlackPixelsCheckBox = new System.Windows.Forms.CheckBox();
+            this.beforeAfterCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.doneMozaic)).BeginInit();
+            this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // titleLabel
@@ -157,9 +164,6 @@ namespace Photo_mozaic_ator
             this.chooseSetDestinationButton.UseVisualStyleBackColor = true;
             this.chooseSetDestinationButton.Click += new System.EventHandler(this.chooseSetDestinationButton_Click);
             // 
-            // tilesetDestinationDialog
-            // 
-            // 
             // chooseTilesetButton
             // 
             this.chooseTilesetButton.Location = new System.Drawing.Point(13, 310);
@@ -170,14 +174,82 @@ namespace Photo_mozaic_ator
             this.chooseTilesetButton.UseVisualStyleBackColor = true;
             this.chooseTilesetButton.Click += new System.EventHandler(this.chooseTilesetButton_Click);
             // 
-            // tilesetSourceDialog
+            // imageScaleInput
             // 
+            this.imageScaleInput.Location = new System.Drawing.Point(0, 0);
+            this.imageScaleInput.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            this.imageScaleInput.MaxLength = 10;
+            this.imageScaleInput.Name = "imageScaleInput";
+            this.imageScaleInput.PlaceholderText = "Image scale  ";
+            this.imageScaleInput.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.imageScaleInput.Size = new System.Drawing.Size(92, 23);
+            this.imageScaleInput.TabIndex = 9;
+            this.imageScaleInput.TextChanged += new System.EventHandler(this.imageScaleInput_TextChanged);
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.imageScaleInput);
+            this.flowLayoutPanel1.Controls.Add(this.snappingFactorInput);
+            this.flowLayoutPanel1.Controls.Add(this.tileSizeInput);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(13, 281);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(282, 23);
+            this.flowLayoutPanel1.TabIndex = 10;
+            // 
+            // snappingFactorInput
+            // 
+            this.snappingFactorInput.Location = new System.Drawing.Point(95, 0);
+            this.snappingFactorInput.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            this.snappingFactorInput.MaxLength = 10;
+            this.snappingFactorInput.Name = "snappingFactorInput";
+            this.snappingFactorInput.PlaceholderText = "Snapping factor";
+            this.snappingFactorInput.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.snappingFactorInput.Size = new System.Drawing.Size(92, 23);
+            this.snappingFactorInput.TabIndex = 10;
+            this.snappingFactorInput.TextChanged += new System.EventHandler(this.snappingFactorInput_TextChanged);
+            // 
+            // tileSizeInput
+            // 
+            this.tileSizeInput.Location = new System.Drawing.Point(190, 0);
+            this.tileSizeInput.Margin = new System.Windows.Forms.Padding(0);
+            this.tileSizeInput.MaxLength = 10;
+            this.tileSizeInput.Name = "tileSizeInput";
+            this.tileSizeInput.PlaceholderText = "Tile size";
+            this.tileSizeInput.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tileSizeInput.Size = new System.Drawing.Size(92, 23);
+            this.tileSizeInput.TabIndex = 11;
+            this.tileSizeInput.TextChanged += new System.EventHandler(this.tileSizeInput_TextChanged);
+            // 
+            // ignoreBlackPixelsCheckBox
+            // 
+            this.ignoreBlackPixelsCheckBox.AutoSize = true;
+            this.ignoreBlackPixelsCheckBox.Location = new System.Drawing.Point(13, 256);
+            this.ignoreBlackPixelsCheckBox.Name = "ignoreBlackPixelsCheckBox";
+            this.ignoreBlackPixelsCheckBox.Size = new System.Drawing.Size(123, 19);
+            this.ignoreBlackPixelsCheckBox.TabIndex = 11;
+            this.ignoreBlackPixelsCheckBox.Text = "Ignore black pixels";
+            this.ignoreBlackPixelsCheckBox.UseVisualStyleBackColor = true;
+            this.ignoreBlackPixelsCheckBox.CheckedChanged += new System.EventHandler(this.ignoreBlackPixelsCheckBox_CheckedChanged);
+            // 
+            // beforeAfterCheckBox
+            // 
+            this.beforeAfterCheckBox.AutoSize = true;
+            this.beforeAfterCheckBox.Location = new System.Drawing.Point(142, 256);
+            this.beforeAfterCheckBox.Name = "beforeAfterCheckBox";
+            this.beforeAfterCheckBox.Size = new System.Drawing.Size(160, 19);
+            this.beforeAfterCheckBox.TabIndex = 12;
+            this.beforeAfterCheckBox.Text = "Before/after comparation";
+            this.beforeAfterCheckBox.UseVisualStyleBackColor = true;
+            this.beforeAfterCheckBox.CheckedChanged += new System.EventHandler(this.beforeAfterCheckBox_CheckedChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.beforeAfterCheckBox);
+            this.Controls.Add(this.ignoreBlackPixelsCheckBox);
+            this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.chooseTilesetButton);
             this.Controls.Add(this.chooseSetDestinationButton);
             this.Controls.Add(this.generateStonesButton);
@@ -190,6 +262,8 @@ namespace Photo_mozaic_ator
             this.Name = "Form1";
             this.Text = "Photo-mozaic-ator";
             ((System.ComponentModel.ISupportInitialize)(this.doneMozaic)).EndInit();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -212,6 +286,12 @@ namespace Photo_mozaic_ator
         private System.Windows.Forms.Button chooseTilesetButton;
         public System.Windows.Forms.FolderBrowserDialog tilesetDestinationDialog;
         public System.Windows.Forms.FolderBrowserDialog tilesetSourceDialog;
+        private System.Windows.Forms.TextBox imageScaleInput;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.TextBox snappingFactorInput;
+        private System.Windows.Forms.TextBox tileSizeInput;
+        private System.Windows.Forms.CheckBox ignoreBlackPixelsCheckBox;
+        private System.Windows.Forms.CheckBox beforeAfterCheckBox;
     }
 }
 

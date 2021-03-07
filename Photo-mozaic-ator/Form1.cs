@@ -20,6 +20,10 @@ namespace Photo_mozaic_ator
             tilesetDestinationDialog.SelectedPath = Path.GetFullPath(AplicationStatus.workingDirectory);
             tilesetSourceDialog.SelectedPath = Path.GetFullPath(AplicationStatus.workingDirectory);
         }
+        private void SetStatus<T>(T status)
+        {
+            statusBar.Text = "Status: " + status.ToString();
+        }
 
         #region Create Mozaic
         private void createMozaicButton_Click(object sender, EventArgs e)
@@ -59,10 +63,9 @@ namespace Photo_mozaic_ator
             string source = AplicationStatus.inputFile;
 
             Image fromFile = Image.FromFile(source);
-            Image targetImage = Mozaicator.ResizeImage(fromFile, fromFile.Width * AplicationStatus.imageScale, fromFile.Height * AplicationStatus.imageScale);
-
-            int width = targetImage.Width;
-            int height = targetImage.Height;
+            int width = (int)(fromFile.Width * AplicationStatus.imageScale);
+            int height = (int)(fromFile.Height * AplicationStatus.imageScale);
+            Image targetImage = Mozaicator.ResizeImage(fromFile, width, height);
 
             int horizontalFaces = width / AplicationStatus.tileSize;
             int verticalFaces = height / AplicationStatus.tileSize;
@@ -91,7 +94,7 @@ namespace Photo_mozaic_ator
                     //{
                     //    selectedFace = (Bitmap)Image.FromFile("blank.bmp");
                     //}
-                    selectedFace = (Bitmap)Image.FromFile(AplicationStatus.existingTilesetDir +"/" + filename);
+                    selectedFace = (Bitmap)Image.FromFile(AplicationStatus.existingTilesetDir + "/" + filename);
 
                     Mozaicator.CopyRegionIntoImage(selectedFace, new Rectangle(0, 0, AplicationStatus.tileSize, AplicationStatus.tileSize), ref generatedImage, new Rectangle(new Point(x * AplicationStatus.tileSize, y * AplicationStatus.tileSize), new Size(AplicationStatus.tileSize, AplicationStatus.tileSize)));
                 }
@@ -99,17 +102,39 @@ namespace Photo_mozaic_ator
                 worker.ReportProgress((int)(++progress * 100.0f / horizontalFaces));
             }
             worker.ReportProgress(100);
-            AplicationStatus.outputImage = generatedImage;
-            generatedImage.Save(AplicationStatus.GetOutputFile());
+
+            if (AplicationStatus.beforeAfterComparation)
+            {
+                //add before image
+                Image beforeFromFile = Image.FromFile(AplicationStatus.inputFile);
+                width = (int)(beforeFromFile.Width * AplicationStatus.imageScale);
+                height = (int)(beforeFromFile.Height * AplicationStatus.imageScale);
+                Image beforeImg = Mozaicator.ResizeImage(beforeFromFile, width, height);
+                Bitmap before = new Bitmap(beforeImg);
+                Bitmap after = generatedImage;
+
+                Bitmap comparation = new Bitmap(before.Width + after.Width, Math.Max(before.Height, after.Height));
+                using (Graphics g = Graphics.FromImage(comparation))
+                {
+                    g.DrawImage(before, 0, 0);
+                    g.DrawImage(after, before.Width, 0);
+                }
+
+                AplicationStatus.outputImage = comparation;
+                comparation.Save(AplicationStatus.GetOutputFile());
+            }
+            else
+            {
+                AplicationStatus.outputImage = generatedImage;
+                generatedImage.Save(AplicationStatus.GetOutputFile());
+            }
         }
 
-        // This event handler updates the progress.
         private void AsyncWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             SetStatus(e.ProgressPercentage + "%");
         }
 
-        // This event handler deals with the results of the background operation.
         private void AsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Cancelled == true)
@@ -193,19 +218,12 @@ namespace Photo_mozaic_ator
         }
         private void chooseSetDestinationButton_Click(object sender, EventArgs e)
         {
-            if(tilesetDestinationDialog.ShowDialog() == DialogResult.OK)
+            if (tilesetDestinationDialog.ShowDialog() == DialogResult.OK)
             {
                 SetStatus(tilesetDestinationDialog.SelectedPath);
                 AplicationStatus.newTilesetDir = tilesetDestinationDialog.SelectedPath;
             }
         }
-        #endregion
-
-        private void SetStatus<T>(T status)
-        {
-            statusBar.Text = "Status: " + status.ToString();
-        }
-
         private void chooseTilesetButton_Click(object sender, EventArgs e)
         {
             if (tilesetSourceDialog.ShowDialog() == DialogResult.OK)
@@ -214,5 +232,51 @@ namespace Photo_mozaic_ator
                 AplicationStatus.existingTilesetDir = tilesetSourceDialog.SelectedPath;
             }
         }
+        #endregion
+
+        #region Config
+        private void imageScaleInput_TextChanged(object sender, EventArgs e)
+        {
+            double newImageScale = AplicationStatus.imageScale;
+            if (double.TryParse(imageScaleInput.Text, out newImageScale))
+            {
+                AplicationStatus.imageScale = newImageScale;
+            }
+            SetStatus($"imageScale = {AplicationStatus.imageScale}");
+        }
+
+        private void snappingFactorInput_TextChanged(object sender, EventArgs e)
+        {
+            double newSnappingFactor = AplicationStatus.snappingFactor;
+            if (double.TryParse(snappingFactorInput.Text, out newSnappingFactor))
+            {
+                AplicationStatus.snappingFactor = newSnappingFactor;
+            }
+            SetStatus($"snappingFactor = {AplicationStatus.snappingFactor}");
+        }
+
+        private void tileSizeInput_TextChanged(object sender, EventArgs e)
+        {
+            int newTileSize = AplicationStatus.tileSize;
+            if (int.TryParse(tileSizeInput.Text, out newTileSize))
+            {
+                AplicationStatus.tileSize = newTileSize;
+            }
+            SetStatus($"tileSize = {AplicationStatus.tileSize}");
+        }
+
+        private void ignoreBlackPixelsCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            int ignoreBlackPixels = ignoreBlackPixelsCheckBox.Checked ? 1 : 0;
+            AplicationStatus.ignoreBlackPixels = ignoreBlackPixels;
+            SetStatus($"ignoreBlackPixels = " + (AplicationStatus.ignoreBlackPixels==1 ? "true" : "false"));
+        }
+
+        private void beforeAfterCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            AplicationStatus.beforeAfterComparation = beforeAfterCheckBox.Checked;
+            SetStatus($"beforeAfterComparation = " + (AplicationStatus.beforeAfterComparation ? "true" : "false"));
+        }
+        #endregion
     }
 }

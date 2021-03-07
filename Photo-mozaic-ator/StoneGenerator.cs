@@ -11,7 +11,7 @@ namespace Photo_mozaic_ator
         public static void GenerateOneTile(int imageNum)
         {
             //load image
-            Image face = Image.FromFile(AplicationStatus.workingDirectory + @"pokemon/pokemon " + imageNum + ".png");
+            Image face = Image.FromFile(AplicationStatus.workingDirectory + @"10000_faces/image" + imageNum + ".png");
 
             //scale down to 16x16 px
             Bitmap smallFace = (Bitmap)Mozaicator.ResizeImage(face, AplicationStatus.tileSize, AplicationStatus.tileSize);
@@ -34,17 +34,17 @@ namespace Photo_mozaic_ator
             }
             //normalizing
             int tileSizeSquared = (int)Math.Pow(AplicationStatus.tileSize, 2);
-            red /= tileSizeSquared - blackPixels;
-            green /= tileSizeSquared - blackPixels;
-            blue /= tileSizeSquared - blackPixels;
+            red /= Math.Max(1, tileSizeSquared - (blackPixels * AplicationStatus.ignoreBlackPixels));
+            green /= Math.Max(1, tileSizeSquared - (blackPixels * AplicationStatus.ignoreBlackPixels));
+            blue /= Math.Max(1, tileSizeSquared - (blackPixels * AplicationStatus.ignoreBlackPixels));
 
             //snapping to 8*8*8 color pallete (512 colors)
-            red /= AplicationStatus.normalizingFactor;
-            red *= AplicationStatus.normalizingFactor;
-            green /= AplicationStatus.normalizingFactor;
-            green *= AplicationStatus.normalizingFactor;
-            blue /= AplicationStatus.normalizingFactor;
-            blue *= AplicationStatus.normalizingFactor;
+            red = (int)(red / AplicationStatus.snappingFactor);
+            red = (int)(red * AplicationStatus.snappingFactor);
+            green = (int)(green / AplicationStatus.snappingFactor);
+            green = (int)(green * AplicationStatus.snappingFactor);
+            blue = (int)(blue / AplicationStatus.snappingFactor);
+            blue = (int)(blue * AplicationStatus.snappingFactor);
 
             //save as #RRGGBB.bmp
             string name = "";

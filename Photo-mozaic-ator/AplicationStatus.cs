@@ -16,11 +16,13 @@ namespace Photo_mozaic_ator
         public static string newTilesetDir;
         public static string existingTilesetDir;
         public static Bitmap outputImage { get; set; }
-        public static int imageScale { get; set; }
+        public static double imageScale { get; set; }
+        public static int ignoreBlackPixels { get; set; }
+        public static bool beforeAfterComparation { get; set; }
 
         //tile generation
         public static int tileSize { get; set; }
-        public static int normalizingFactor { get; set; }
+        public static double snappingFactor { get; set; }
 
         static AplicationStatus()
         {
@@ -30,8 +32,10 @@ namespace Photo_mozaic_ator
             newTilesetDir = null;
             newTilesetDir = null;
             tileSize = 96;
-            normalizingFactor = 1;
-            imageScale = 8;
+            snappingFactor = 1;
+            imageScale = 1;
+            ignoreBlackPixels = 1;
+            beforeAfterComparation = false;
         }
 
         public static string GetOutputFile()

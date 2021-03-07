@@ -118,6 +118,8 @@ Konverze 1920x1080 trvala na mém PC 8s. Implementace není optimální, ale vý
 
 Aplikace je nyní v WFA. Je implementovaná funkcionalita tvorby kamínků a následné generování mozaik.
 
+Živé porovnání --> http://lukascaha.com/image_compare/
+
 ![application screenshot](http://lukascaha.com/github_img/image-20210304233923828.png)
 
 ### Příklady
