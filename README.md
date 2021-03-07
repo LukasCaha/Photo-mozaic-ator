@@ -118,20 +118,16 @@ Konverze 1920x1080 trvala na mém PC 8s. Implementace není optimální, ale vý
 
 Aplikace je nyní v WFA. Je implementovaná funkcionalita tvorby kamínků a následné generování mozaik.
 
-Živé porovnání --> http://lukascaha.com/image_compare/
 
 ![application screenshot](http://lukascaha.com/github_img/image-20210304233923828.png)
 
 ### Příklady
 
-#### Předtím 
-![penguins original](http://lukascaha.com/github_img/Penguins.jpg)
-#### Potom
-![penguins mozaic](http://lukascaha.com/github_img/B06C0.png)
+Živé porovnání --> http://lukascaha.com/image_compare/
 
-------
-
-#### Předtím 
-![koala original](http://lukascaha.com/github_img/Koala.jpg)
-#### Potom
-![koala mozaic](https://user-images.githubusercontent.com/29759044/110041577-953d4200-7d44-11eb-88fa-174fd505d6ad.png)
+![waterfall](https://user-images.githubusercontent.com/29759044/110255750-94e7b580-7f95-11eb-820b-241f810fb016.jpg)
+![castle](https://user-images.githubusercontent.com/29759044/110255752-97e2a600-7f95-11eb-8a81-61e0d6ecca2c.jpg)
+![desert](https://user-images.githubusercontent.com/29759044/110255753-97e2a600-7f95-11eb-8dfc-cb8f51dffdf8.jpg)
+![lake](https://user-images.githubusercontent.com/29759044/110255754-987b3c80-7f95-11eb-8cd8-bdcfd7dd9c67.jpg)
+![medow](https://user-images.githubusercontent.com/29759044/110255755-987b3c80-7f95-11eb-8f4b-2b2b4b79d6fd.jpg)
+![medusa](https://user-images.githubusercontent.com/29759044/110255756-9913d300-7f95-11eb-8996-ab8bfa5198fe.jpg)
