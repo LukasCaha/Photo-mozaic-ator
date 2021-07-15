@@ -5,8 +5,8 @@ using System.Drawing;
 
 namespace Photo_mozaic_ator
 {
-    interface IDistanceStrategy
+    abstract class IDistanceStrategy
     {
-        int Distance(Color a, Color b);
+        public abstract int Distance(Color a, Color b);
     }
 }

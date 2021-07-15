@@ -33,12 +33,12 @@ namespace Photo_mozaic_ator
             outputFile = null;
             newTilesetDir = null;
             newTilesetDir = null;
-            tileSize = 96;
+            tileSize = 16;
             snappingFactor = 1;
             imageScale = 1;
             ignoreBlackPixels = 1;
             beforeAfterComparation = false;
-            strategy = new SquareDistanceStrategy();
+            strategy = new BitwiseDistanceStrategy();
         }
 
         public static string GetOutputFile()
@@ -57,6 +57,16 @@ namespace Photo_mozaic_ator
                 return workingDirectory + @"faces by color down 4";
             }
             return existingTilesetDir;
+        }
+
+        public static void SetColorDistanceStrategy(IDistanceStrategy _strategy)
+        {
+            strategy = _strategy;
+        }
+
+        public static void SetOutputImage(Bitmap _outputImage)
+        {
+            outputImage = new Bitmap(_outputImage);
         }
     }
 }

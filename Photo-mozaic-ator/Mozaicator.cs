@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photo_mozaic_ator.DistanceStrategies;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -74,7 +75,23 @@ namespace Photo_mozaic_ator
                 {
                     //convert filename to color
                     Color fileColor = ColorTranslator.FromHtml(file.Name.Substring(0, 7));
-                    int dist = strategy.Distance(fileColor, representingColor);
+                    int dist = AplicationStatus.strategy.Distance(fileColor, representingColor);
+                    /*switch (AplicationStatus.strategy.ToString())
+                    {
+                        case "Square Distance Strategy":
+                            dist = new SquareDistanceStrategy().Distance(fileColor, representingColor);
+                            break;
+                        case "Bitwise Distance Strategy":
+
+                            dist = new BitwiseDistanceStrategy().Distance(fileColor, representingColor);
+                            break;
+                        case "CIE76 Distance Strategy":
+                            dist = new CIE76DistanceStrategy().Distance(fileColor, representingColor);
+                            break;
+                        default:
+                            throw new Exception("Non existing color distance strategy");
+                            break;
+                    }*/
                     if (dist < minimum)
                     {
                         minimum = dist;

@@ -32,7 +32,11 @@ namespace Photo_mozaic_ator
             if (asyncWorker.IsBusy != true)
             {
                 // Start the asynchronous operation.
-                asyncWorker.RunWorkerAsync();
+                asyncWorker.RunWorkerAsync(argument: AplicationStatus.inputFile);
+            }
+            else
+            {
+                SetStatus("Program is busy");
             }
         }
 
@@ -49,24 +53,18 @@ namespace Photo_mozaic_ator
         {
             BackgroundWorker worker = sender as BackgroundWorker;
 
-            /*
-             if (worker.CancellationPending == true)
-                {
-                    e.Cancel = true;
-                    break;
-                }
-            */
             if (AplicationStatus.inputFile == null)
             {
-                //SetStatus("Input file not specified");
                 throw new FileNotFoundException("Input file not specified");
             }
-            string source = AplicationStatus.inputFile;
+            //string source = AplicationStatus.inputFile;
+            string source = (string)e.Argument;
 
             Image fromFile = Image.FromFile(source);
             int width = (int)(fromFile.Width * AplicationStatus.imageScale);
             int height = (int)(fromFile.Height * AplicationStatus.imageScale);
             Image targetImage = Mozaicator.ResizeImage(fromFile, width, height);
+            fromFile.Dispose();
 
             int horizontalFaces = width / AplicationStatus.tileSize;
             int verticalFaces = height / AplicationStatus.tileSize;
@@ -77,6 +75,7 @@ namespace Photo_mozaic_ator
             Bitmap generatedImage = new Bitmap(width - overflowWidth, height - overflowHeight);
 
             Bitmap b = (Bitmap)targetImage;
+            Bitmap selectedFace = null;
             int progress = 0;
             for (int x = 0; x < horizontalFaces; x++)
             {
@@ -86,15 +85,6 @@ namespace Photo_mozaic_ator
                     string filename = Mozaicator.FindClosestColorAndReturnImageName(ref b, x * AplicationStatus.tileSize, y * AplicationStatus.tileSize, AplicationStatus.strategy);
 
                     //load file to bitmap
-                    Bitmap selectedFace;
-                    //if ()
-                    //{
-
-                    //}
-                    //else
-                    //{
-                    //    selectedFace = (Bitmap)Image.FromFile("blank.bmp");
-                    //}
                     selectedFace = (Bitmap)Image.FromFile(AplicationStatus.existingTilesetDir + "/" + filename);
 
                     Mozaicator.CopyRegionIntoImage(selectedFace, new Rectangle(0, 0, AplicationStatus.tileSize, AplicationStatus.tileSize), ref generatedImage, new Rectangle(new Point(x * AplicationStatus.tileSize, y * AplicationStatus.tileSize), new Size(AplicationStatus.tileSize, AplicationStatus.tileSize)));
@@ -103,6 +93,9 @@ namespace Photo_mozaic_ator
                 worker.ReportProgress((int)(++progress * 100.0f / horizontalFaces));
             }
             worker.ReportProgress(100);
+            worker.Dispose();
+            b.Dispose();
+            selectedFace.Dispose();
 
             if (AplicationStatus.beforeAfterComparation)
             {
@@ -121,12 +114,20 @@ namespace Photo_mozaic_ator
                     g.DrawImage(after, before.Width, 0);
                 }
 
-                AplicationStatus.outputImage = comparation;
+                //AplicationStatus.SetOutputImage(comparation);
+                //AplicationStatus.outputImage = comparation;
+                e.Result = comparation;
                 comparation.Save(AplicationStatus.GetOutputFile());
+
+                beforeFromFile.Dispose();
+                beforeImg.Dispose();
+                after.Dispose();
             }
             else
             {
-                AplicationStatus.outputImage = generatedImage;
+                //AplicationStatus.SetOutputImage(generatedImage);
+                //AplicationStatus.outputImage = generatedImage;
+                e.Result = generatedImage;
                 generatedImage.Save(AplicationStatus.GetOutputFile());
             }
         }
@@ -148,8 +149,10 @@ namespace Photo_mozaic_ator
             }
             else
             {
-                //SetStatus("Done!");
-                doneMozaic.Image = AplicationStatus.outputImage;
+                SetStatus("Done!");
+                //doneMozaic.Image = AplicationStatus.outputImage;
+                doneMozaic.Image = (Bitmap)e.Result;
+                AplicationStatus.outputImage = (Bitmap)e.Result;
             }
         }
         #endregion
@@ -291,16 +294,19 @@ namespace Photo_mozaic_ator
             switch (colorDistanceDomain.Items.ToArray()[colorDistanceDomain.SelectedIndex])
             {
                 case "Square distance":
-                    AplicationStatus.strategy = new SquareDistanceStrategy();
-                    SetStatus("Chosen strategy is Square distance");
+                    //AplicationStatus.strategy = new SquareDistanceStrategy();
+                    AplicationStatus.SetColorDistanceStrategy(new SquareDistanceStrategy());
+                    SetStatus($"Chosen strategy is {AplicationStatus.strategy.ToString()}");
                     break;
                 case "Bitwise distance":
-                    AplicationStatus.strategy = new BitwiseDistanceStrategy();
-                    SetStatus("Chosen strategy is Bitwise distance");
+                    //AplicationStatus.strategy = new BitwiseDistanceStrategy();
+                    AplicationStatus.SetColorDistanceStrategy(new BitwiseDistanceStrategy());
+                    SetStatus($"Chosen strategy is {AplicationStatus.strategy.ToString()}");
                     break;
                 case "CIE76 distance":
-                    AplicationStatus.strategy = new CIE76DistanceStrategy();
-                    SetStatus("Chosen strategy is CIE76 distance");
+                    //AplicationStatus.strategy = new CIE76DistanceStrategy();
+                    AplicationStatus.SetColorDistanceStrategy(new CIE76DistanceStrategy());
+                    SetStatus($"Chosen strategy is {AplicationStatus.strategy.ToString()}");
                     break;
                 default:
                     SetStatus("Strategy not found");

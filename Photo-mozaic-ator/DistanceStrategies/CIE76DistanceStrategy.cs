@@ -11,7 +11,7 @@ namespace Photo_mozaic_ator.DistanceStrategies
         // rgb -> XYZ -> Lab
         // compare 2 Lab colors with eucleideian norm
 
-        public int Distance(Color a, Color b)
+        public override int Distance(Color a, Color b)
         {
             var AinLAB = rgb2lab(a.R, a.G,a.B);
             var BinLAB = rgb2lab(b.R, b.G,b.B);
@@ -54,6 +54,11 @@ namespace Photo_mozaic_ator.DistanceStrategies
             arr[2] = 200f * (FY - FZ);
             return arr;
 
+        }
+
+        public override string ToString()
+        {
+            return "CIE76 Distance Strategy";
         }
     }
 }

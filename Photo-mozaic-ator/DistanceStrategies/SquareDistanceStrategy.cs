@@ -7,17 +7,18 @@ namespace Photo_mozaic_ator.DistanceStrategies
 {
     class SquareDistanceStrategy: IDistanceStrategy
     {
-        public int Distance(Color a, Color b)
+        public override int Distance(Color a, Color b)
         {
-            int redDifference;
-            int greenDifference;
-            int blueDifference;
-
-            redDifference = a.R - b.R;
-            greenDifference = a.G - b.G;
-            blueDifference = a.B - b.B;
+            int redDifference = a.R - b.R;
+            int greenDifference = a.G - b.G;
+            int blueDifference = a.B - b.B;
 
             return redDifference * redDifference + greenDifference * greenDifference + blueDifference * blueDifference;
+        }
+
+        public override string ToString()
+        {
+            return "Square Distance Strategy";
         }
     }
 }

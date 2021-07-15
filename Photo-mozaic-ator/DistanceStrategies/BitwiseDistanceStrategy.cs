@@ -7,18 +7,18 @@ namespace Photo_mozaic_ator.DistanceStrategies
 {
     class BitwiseDistanceStrategy : IDistanceStrategy
     {
-        public int Distance(Color a, Color b)
+        public override int Distance(Color a, Color b)
         {
             int binaryA = 0;
             binaryA += a.R * 256;
-            binaryA = binaryA << 16;
+            binaryA = binaryA << 8;
             binaryA += a.G * 256;
             binaryA = binaryA << 8;
             binaryA += a.B * 256;
 
             int binaryB = 0;
             binaryB += b.R * 256;
-            binaryB = binaryB << 16;
+            binaryB = binaryB << 8;
             binaryB += b.G * 256;
             binaryB = binaryB << 8;
             binaryB += b.B * 256;
@@ -33,7 +33,13 @@ namespace Photo_mozaic_ator.DistanceStrategies
                 }
                 compare = compare >> 1;
             }
+
             return diff;
+        }
+
+        public override string ToString()
+        {
+            return "Bitwise Distance Strategy";
         }
     }
 }
