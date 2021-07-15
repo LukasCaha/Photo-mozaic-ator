@@ -53,6 +53,8 @@ namespace Photo_mozaic_ator
             this.tileSizeInput = new System.Windows.Forms.TextBox();
             this.ignoreBlackPixelsCheckBox = new System.Windows.Forms.CheckBox();
             this.beforeAfterCheckBox = new System.Windows.Forms.CheckBox();
+            this.helpButton = new System.Windows.Forms.Button();
+            this.colorDistanceDomain = new System.Windows.Forms.DomainUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.doneMozaic)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -242,11 +244,37 @@ namespace Photo_mozaic_ator
             this.beforeAfterCheckBox.UseVisualStyleBackColor = true;
             this.beforeAfterCheckBox.CheckedChanged += new System.EventHandler(this.beforeAfterCheckBox_CheckedChanged);
             // 
+            // helpButton
+            // 
+            this.helpButton.Location = new System.Drawing.Point(748, 13);
+            this.helpButton.Name = "helpButton";
+            this.helpButton.Size = new System.Drawing.Size(40, 23);
+            this.helpButton.TabIndex = 13;
+            this.helpButton.Text = "Help";
+            this.helpButton.UseVisualStyleBackColor = true;
+            this.helpButton.Click += new System.EventHandler(this.helpButton_Click);
+            // 
+            // colorDistanceDomain
+            // 
+            this.colorDistanceDomain.AllowDrop = true;
+            this.colorDistanceDomain.Items.Add("Square distance");
+            this.colorDistanceDomain.Items.Add("Bitwise distance");
+            this.colorDistanceDomain.Items.Add("CIE76 distance");
+            this.colorDistanceDomain.Location = new System.Drawing.Point(12, 227);
+            this.colorDistanceDomain.Name = "colorDistanceDomain";
+            this.colorDistanceDomain.ReadOnly = true;
+            this.colorDistanceDomain.Size = new System.Drawing.Size(282, 23);
+            this.colorDistanceDomain.TabIndex = 14;
+            this.colorDistanceDomain.Text = "Choose color distance method";
+            this.colorDistanceDomain.SelectedItemChanged += new System.EventHandler(this.colorDistanceDomain_SelectedItemChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.colorDistanceDomain);
+            this.Controls.Add(this.helpButton);
             this.Controls.Add(this.beforeAfterCheckBox);
             this.Controls.Add(this.ignoreBlackPixelsCheckBox);
             this.Controls.Add(this.flowLayoutPanel1);
@@ -259,6 +287,7 @@ namespace Photo_mozaic_ator
             this.Controls.Add(this.statusBar);
             this.Controls.Add(this.createMozaicButton);
             this.Controls.Add(this.titleLabel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Photo-mozaic-ator";
             ((System.ComponentModel.ISupportInitialize)(this.doneMozaic)).EndInit();
@@ -292,6 +321,8 @@ namespace Photo_mozaic_ator
         private System.Windows.Forms.TextBox tileSizeInput;
         private System.Windows.Forms.CheckBox ignoreBlackPixelsCheckBox;
         private System.Windows.Forms.CheckBox beforeAfterCheckBox;
+        private System.Windows.Forms.Button helpButton;
+        private System.Windows.Forms.DomainUpDown colorDistanceDomain;
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photo_mozaic_ator.DistanceStrategies;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
@@ -23,6 +24,7 @@ namespace Photo_mozaic_ator
         //tile generation
         public static int tileSize { get; set; }
         public static double snappingFactor { get; set; }
+        public static IDistanceStrategy strategy { get; set; }
 
         static AplicationStatus()
         {
@@ -36,6 +38,7 @@ namespace Photo_mozaic_ator
             imageScale = 1;
             ignoreBlackPixels = 1;
             beforeAfterComparation = false;
+            strategy = new SquareDistanceStrategy();
         }
 
         public static string GetOutputFile()

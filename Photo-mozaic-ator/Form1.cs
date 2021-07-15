@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using Photo_mozaic_ator.DistanceStrategies;
 
 namespace Photo_mozaic_ator
 {
@@ -82,7 +83,7 @@ namespace Photo_mozaic_ator
                 for (int y = 0; y < verticalFaces; y++)
                 {
                     //find color of region (filename)
-                    string filename = Mozaicator.FindClosestColorAndReturnImageName(ref b, x * AplicationStatus.tileSize, y * AplicationStatus.tileSize);
+                    string filename = Mozaicator.FindClosestColorAndReturnImageName(ref b, x * AplicationStatus.tileSize, y * AplicationStatus.tileSize, AplicationStatus.strategy);
 
                     //load file to bitmap
                     Bitmap selectedFace;
@@ -167,9 +168,9 @@ namespace Photo_mozaic_ator
         {
             BackgroundWorker worker = sender as BackgroundWorker;
 
-            //for each of 10000 images
-            int images = 899;
-            for (int imageNum = 1; imageNum < 899; imageNum++)
+            //for each of N images
+            int images = Directory.GetFiles(@"./tileset_source", "*", SearchOption.TopDirectoryOnly).Length;
+            for (int imageNum = 1; imageNum <= images; imageNum++)
             {
                 StoneGenerator.GenerateOneTile(imageNum);
                 worker.ReportProgress((int)(imageNum * 100.0f / images));
@@ -278,5 +279,33 @@ namespace Photo_mozaic_ator
             SetStatus($"beforeAfterComparation = " + (AplicationStatus.beforeAfterComparation ? "true" : "false"));
         }
         #endregion
+
+        private void helpButton_Click(object sender, EventArgs e)
+        {
+            var form = new HelpForm();
+            form.Show();
+        }
+
+        private void colorDistanceDomain_SelectedItemChanged(object sender, EventArgs e)
+        {
+            switch (colorDistanceDomain.Items.ToArray()[colorDistanceDomain.SelectedIndex])
+            {
+                case "Square distance":
+                    AplicationStatus.strategy = new SquareDistanceStrategy();
+                    SetStatus("Chosen strategy is Square distance");
+                    break;
+                case "Bitwise distance":
+                    AplicationStatus.strategy = new BitwiseDistanceStrategy();
+                    SetStatus("Chosen strategy is Bitwise distance");
+                    break;
+                case "CIE76 distance":
+                    AplicationStatus.strategy = new CIE76DistanceStrategy();
+                    SetStatus("Chosen strategy is CIE76 distance");
+                    break;
+                default:
+                    SetStatus("Strategy not found");
+                    break;
+            }
+        }
     }
 }

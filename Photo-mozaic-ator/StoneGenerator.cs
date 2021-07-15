@@ -11,7 +11,7 @@ namespace Photo_mozaic_ator
         public static void GenerateOneTile(int imageNum)
         {
             //load image
-            Image face = Image.FromFile(AplicationStatus.workingDirectory + @"10000_faces/image" + imageNum + ".png");
+            Image face = Image.FromFile(AplicationStatus.workingDirectory + @"tileset_source/image (" + imageNum + ").png");
 
             //scale down to 16x16 px
             Bitmap smallFace = (Bitmap)Mozaicator.ResizeImage(face, AplicationStatus.tileSize, AplicationStatus.tileSize);

@@ -8,7 +8,7 @@ namespace Photo_mozaic_ator
 {
     class Mozaicator
     {
-        public static string FindClosestColorAndReturnImageName(ref Bitmap targetImage, int offsetX, int offsetY)
+        public static string FindClosestColorAndReturnImageName(ref Bitmap targetImage, int offsetX, int offsetY, IDistanceStrategy strategy)
         {
             int red = 0, green = 0, blue = 0;
             for (int x = 0; x < AplicationStatus.tileSize; x++)
@@ -74,7 +74,7 @@ namespace Photo_mozaic_ator
                 {
                     //convert filename to color
                     Color fileColor = ColorTranslator.FromHtml(file.Name.Substring(0, 7));
-                    int dist = Distance(fileColor, representingColor);
+                    int dist = strategy.Distance(fileColor, representingColor);
                     if (dist < minimum)
                     {
                         minimum = dist;
@@ -104,47 +104,47 @@ namespace Photo_mozaic_ator
         public static List<Match> matches = new List<Match>();
 
 
-        public static int Distance2(Color a, Color b)
-        {
-            int binaryA = 0;
-            binaryA += a.R * 256;
-            binaryA = binaryA << 16;
-            binaryA += a.G * 256;
-            binaryA = binaryA << 8;
-            binaryA += a.B * 256;
+        //public static int Distance2(Color a, Color b)
+        //{
+        //    int binaryA = 0;
+        //    binaryA += a.R * 256;
+        //    binaryA = binaryA << 16;
+        //    binaryA += a.G * 256;
+        //    binaryA = binaryA << 8;
+        //    binaryA += a.B * 256;
 
-            int binaryB = 0;
-            binaryB += b.R * 256;
-            binaryB = binaryB << 16;
-            binaryB += b.G * 256;
-            binaryB = binaryB << 8;
-            binaryB += b.B * 256;
+        //    int binaryB = 0;
+        //    binaryB += b.R * 256;
+        //    binaryB = binaryB << 16;
+        //    binaryB += b.G * 256;
+        //    binaryB = binaryB << 8;
+        //    binaryB += b.B * 256;
 
-            int compare = binaryA ^ binaryB;
-            int diff = 0;
-            for (int i = 0; i < 24; i++)
-            {
-                if (compare % 2 == 1)
-                {
-                    diff++;
-                }
-                compare = compare >> 1;
-            }
-            return diff;
-        }
+        //    int compare = binaryA ^ binaryB;
+        //    int diff = 0;
+        //    for (int i = 0; i < 24; i++)
+        //    {
+        //        if (compare % 2 == 1)
+        //        {
+        //            diff++;
+        //        }
+        //        compare = compare >> 1;
+        //    }
+        //    return diff;
+        //}
 
-        public static int Distance(Color current, Color match)
-        {
-            int redDifference;
-            int greenDifference;
-            int blueDifference;
+        //public static int Distance(Color current, Color match)
+        //{
+        //    int redDifference;
+        //    int greenDifference;
+        //    int blueDifference;
 
-            redDifference = current.R - match.R;
-            greenDifference = current.G - match.G;
-            blueDifference = current.B - match.B;
+        //    redDifference = current.R - match.R;
+        //    greenDifference = current.G - match.G;
+        //    blueDifference = current.B - match.B;
 
-            return redDifference * redDifference + greenDifference * greenDifference + blueDifference * blueDifference;
-        }
+        //    return redDifference * redDifference + greenDifference * greenDifference + blueDifference * blueDifference;
+        //}
 
         public static Image ResizeImage(Image img, int width, int height)
         {
