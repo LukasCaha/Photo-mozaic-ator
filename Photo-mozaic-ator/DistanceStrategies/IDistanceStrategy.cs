@@ -20,3 +20,7 @@ namespace Photo_mozaic_ator
         int Distance(Color a, Color b);
     }
 }
+
+
+
+

@@ -47,3 +47,6 @@ namespace Photo_mozaic_ator.DistanceStrategies
         }
     }
 }
+
+
+
