@@ -5,13 +5,17 @@ using System.Text;
 
 namespace Photo_mozaic_ator.DistanceStrategies
 {
+
+    /// <summary>
+    /// CIE 1976 distance implementation. Translates colros to XYZ and then Lab reprezentation. Takes square distance of Lab colors.
+    /// </summary>
     class CIE76DistanceStrategy : IDistanceStrategy
     {
         // CIE76 color distance
         // rgb -> XYZ -> Lab
         // compare 2 Lab colors with eucleideian norm
 
-        public override int Distance(Color a, Color b)
+        public int Distance(Color a, Color b)
         {
             var AinLAB = rgb2lab(a.R, a.G,a.B);
             var BinLAB = rgb2lab(b.R, b.G,b.B);
@@ -31,6 +35,13 @@ namespace Photo_mozaic_ator.DistanceStrategies
             return x > 0.04045f ? MathF.Pow((x + 0.055f) / 1.055f, 2.4f) : x / 12.92f;
         }
 
+        /// <summary>
+        /// Translates first to XYZ and then to Lab representation.
+        /// </summary>
+        /// <param name="var_R"></param>
+        /// <param name="var_G"></param>
+        /// <param name="var_B"></param>
+        /// <returns></returns>
         public static float[] rgb2lab(float var_R, float var_G, float var_B)
         {
 

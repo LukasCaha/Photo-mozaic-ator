@@ -5,9 +5,12 @@ using System.Drawing;
 
 namespace Photo_mozaic_ator.DistanceStrategies
 {
+    /// <summary>
+    /// Square distance implementation. Takes square of each channel difference and sums them.
+    /// </summary>
     class SquareDistanceStrategy: IDistanceStrategy
     {
-        public override int Distance(Color a, Color b)
+        public int Distance(Color a, Color b)
         {
             int redDifference = a.R - b.R;
             int greenDifference = a.G - b.G;

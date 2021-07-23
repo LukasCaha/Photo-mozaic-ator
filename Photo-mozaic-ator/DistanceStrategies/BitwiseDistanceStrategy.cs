@@ -5,9 +5,13 @@ using System.Drawing;
 
 namespace Photo_mozaic_ator.DistanceStrategies
 {
+
+    /// <summary>
+    /// Bitwise distance implementation. Takes bit distance of colors. Output in interval &lt;0,24&gt;.
+    /// </summary>
     class BitwiseDistanceStrategy : IDistanceStrategy
     {
-        public override int Distance(Color a, Color b)
+        public int Distance(Color a, Color b)
         {
             int binaryA = 0;
             binaryA += a.R * 256;
