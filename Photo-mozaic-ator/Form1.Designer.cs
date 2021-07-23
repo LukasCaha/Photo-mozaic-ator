@@ -79,13 +79,14 @@ namespace Photo_mozaic_ator
             // 
             // createMozaicButton
             // 
+            this.createMozaicButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.createMozaicButton.Location = new System.Drawing.Point(13, 397);
             this.createMozaicButton.Name = "createMozaicButton";
             this.createMozaicButton.Size = new System.Drawing.Size(281, 23);
             this.createMozaicButton.TabIndex = 1;
             this.createMozaicButton.Text = "Create mozaic";
             this.createMozaicButton.UseMnemonic = false;
-            this.createMozaicButton.UseVisualStyleBackColor = true;
+            this.createMozaicButton.UseVisualStyleBackColor = false;
             this.createMozaicButton.Click += new System.EventHandler(this.createMozaicButton_Click);
             // 
             // statusBar
@@ -120,12 +121,14 @@ namespace Photo_mozaic_ator
             // 
             // openFile
             // 
-            this.openFile.Location = new System.Drawing.Point(13, 339);
+            this.openFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.openFile.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.openFile.Location = new System.Drawing.Point(13, 310);
             this.openFile.Name = "openFile";
             this.openFile.Size = new System.Drawing.Size(281, 23);
             this.openFile.TabIndex = 4;
             this.openFile.Text = "Input File";
-            this.openFile.UseVisualStyleBackColor = true;
+            this.openFile.UseVisualStyleBackColor = false;
             this.openFile.Click += new System.EventHandler(this.openFile_Click);
             // 
             // saveFile
@@ -168,12 +171,15 @@ namespace Photo_mozaic_ator
             // 
             // chooseTilesetButton
             // 
-            this.chooseTilesetButton.Location = new System.Drawing.Point(13, 310);
+            this.chooseTilesetButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.chooseTilesetButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.chooseTilesetButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.chooseTilesetButton.Location = new System.Drawing.Point(13, 339);
             this.chooseTilesetButton.Name = "chooseTilesetButton";
             this.chooseTilesetButton.Size = new System.Drawing.Size(281, 23);
             this.chooseTilesetButton.TabIndex = 8;
-            this.chooseTilesetButton.Text = "Tileset";
-            this.chooseTilesetButton.UseVisualStyleBackColor = true;
+            this.chooseTilesetButton.Text = "Tileset directory";
+            this.chooseTilesetButton.UseVisualStyleBackColor = false;
             this.chooseTilesetButton.Click += new System.EventHandler(this.chooseTilesetButton_Click);
             // 
             // imageScaleInput
@@ -260,7 +266,7 @@ namespace Photo_mozaic_ator
             this.colorDistanceDomain.Items.Add("Square distance");
             this.colorDistanceDomain.Items.Add("Bitwise distance");
             this.colorDistanceDomain.Items.Add("CIE76 distance");
-            this.colorDistanceDomain.Location = new System.Drawing.Point(12, 227);
+            this.colorDistanceDomain.Location = new System.Drawing.Point(13, 227);
             this.colorDistanceDomain.Name = "colorDistanceDomain";
             this.colorDistanceDomain.ReadOnly = true;
             this.colorDistanceDomain.Size = new System.Drawing.Size(282, 23);

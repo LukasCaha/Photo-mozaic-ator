@@ -38,7 +38,7 @@ namespace Photo_mozaic_ator
             imageScale = 1;
             ignoreBlackPixels = 1;
             beforeAfterComparation = false;
-            strategy = new BitwiseDistanceStrategy();
+            strategy = new SquareDistanceStrategy();
         }
 
         public static string GetOutputFile()

@@ -64,7 +64,16 @@ namespace Photo_mozaic_ator
                     }
                 }
 
-                DirectoryInfo dir = new DirectoryInfo(AplicationStatus.existingTilesetDir);  //dir with colors
+
+                DirectoryInfo dir;
+                try
+                {
+                    dir = new DirectoryInfo(AplicationStatus.existingTilesetDir);  //dir with colors
+                }
+                catch (System.ArgumentNullException)
+                {
+                    throw new Exception("Tileset directory not specified");
+                }
 
                 //find minimum
                 int minimum = int.MaxValue;
