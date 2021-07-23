@@ -7,10 +7,22 @@ using System.Text;
 
 namespace Photo_mozaic_ator
 {
+    /// <summary>
+    /// Class responsible for mozaic creation.
+    /// </summary>
     class Mozaicator
     {
+        /// <summary>
+        /// Takes section of original image. Determines what is average color. Finds tile-file with closest color according to color distance strategy.
+        /// </summary>
+        /// <param name="targetImage">Image from which take the section to represent.</param>
+        /// <param name="offsetX">X coordinate in source image</param>
+        /// <param name="offsetY">Y coordinate in source image</param>
+        /// <param name="strategy">Color distance strategy</param>
+        /// <returns>Returns tile file path.</returns>
         public static string FindClosestColorAndReturnImageName(ref Bitmap targetImage, int offsetX, int offsetY, IDistanceStrategy strategy)
         {
+            //sum colors
             int red = 0, green = 0, blue = 0;
             for (int x = 0; x < AplicationStatus.tileSize; x++)
             {
@@ -29,7 +41,7 @@ namespace Photo_mozaic_ator
             green /= tileSizeSquared;
             blue /= tileSizeSquared;
 
-            //snapping to 8*8*8 color pallete (512 colors)
+            //snapping to smaller color pallete
             red = (int)(red / AplicationStatus.snappingFactor);
             red = (int)(red * AplicationStatus.snappingFactor);
             green = (int)(green / AplicationStatus.snappingFactor);
@@ -45,25 +57,24 @@ namespace Photo_mozaic_ator
             name += (green + 256).ToString("X").Substring(1);
             name += (blue + 256).ToString("X").Substring(1);
 
-            string filename = "#" + name + ".bmp";
-            string temp = filename;
+            string tileFilename = "#" + name + ".bmp";
+            string temp = tileFilename;
 
             //if file exists return
-            if (File.Exists(AplicationStatus.existingTilesetDir + filename))
+            if (File.Exists(AplicationStatus.existingTilesetDir + tileFilename))
             {
-                return filename;
+                return tileFilename;
             }
             else
             {
-                //look in matched colors
+                //look in matched colors (cache)
                 foreach (Match match in matches)
                 {
-                    if (match.nonExistingColor == filename)
+                    if (match.nonExistingColor == tileFilename)
                     {
                         return match.alternative;
                     }
                 }
-
 
                 DirectoryInfo dir;
                 try
@@ -75,46 +86,32 @@ namespace Photo_mozaic_ator
                     throw new Exception("Tileset directory not specified");
                 }
 
-                //find minimum
+                //minimal distance of other color
                 int minimum = int.MaxValue;
 
-                //foreach file find distance
-                //find minimum
+                //approximating what color to use from existing colors in tiles directory
                 foreach (var file in dir.GetFiles("*.bmp"))
                 {
                     //convert filename to color
                     Color fileColor = ColorTranslator.FromHtml(file.Name.Substring(0, 7));
                     int dist = AplicationStatus.strategy.Distance(fileColor, representingColor);
-                    /*switch (AplicationStatus.strategy.ToString())
-                    {
-                        case "Square Distance Strategy":
-                            dist = new SquareDistanceStrategy().Distance(fileColor, representingColor);
-                            break;
-                        case "Bitwise Distance Strategy":
-
-                            dist = new BitwiseDistanceStrategy().Distance(fileColor, representingColor);
-                            break;
-                        case "CIE76 Distance Strategy":
-                            dist = new CIE76DistanceStrategy().Distance(fileColor, representingColor);
-                            break;
-                        default:
-                            throw new Exception("Non existing color distance strategy");
-                            break;
-                    }*/
                     if (dist < minimum)
                     {
                         minimum = dist;
-                        filename = file.Name;
+                        tileFilename = file.Name;
                     }
                 }
 
-                //save to matches
-                matches.Add(new Match(temp, filename));
+                //save to matches (cache)
+                matches.Add(new Match(temp, tileFilename));
 
-                return filename;
+                return tileFilename;
             }
         }
 
+        /// <summary>
+        /// Cache structure fornon existing colors. Saves disk acesses.
+        /// </summary>
         public struct Match
         {
             public string nonExistingColor;
@@ -129,49 +126,13 @@ namespace Photo_mozaic_ator
 
         public static List<Match> matches = new List<Match>();
 
-
-        //public static int Distance2(Color a, Color b)
-        //{
-        //    int binaryA = 0;
-        //    binaryA += a.R * 256;
-        //    binaryA = binaryA << 16;
-        //    binaryA += a.G * 256;
-        //    binaryA = binaryA << 8;
-        //    binaryA += a.B * 256;
-
-        //    int binaryB = 0;
-        //    binaryB += b.R * 256;
-        //    binaryB = binaryB << 16;
-        //    binaryB += b.G * 256;
-        //    binaryB = binaryB << 8;
-        //    binaryB += b.B * 256;
-
-        //    int compare = binaryA ^ binaryB;
-        //    int diff = 0;
-        //    for (int i = 0; i < 24; i++)
-        //    {
-        //        if (compare % 2 == 1)
-        //        {
-        //            diff++;
-        //        }
-        //        compare = compare >> 1;
-        //    }
-        //    return diff;
-        //}
-
-        //public static int Distance(Color current, Color match)
-        //{
-        //    int redDifference;
-        //    int greenDifference;
-        //    int blueDifference;
-
-        //    redDifference = current.R - match.R;
-        //    greenDifference = current.G - match.G;
-        //    blueDifference = current.B - match.B;
-
-        //    return redDifference * redDifference + greenDifference * greenDifference + blueDifference * blueDifference;
-        //}
-
+        /// <summary>
+        /// Resize image to new size.
+        /// </summary>
+        /// <param name="img">Image to resize</param>
+        /// <param name="width">New width</param>
+        /// <param name="height">New height</param>
+        /// <returns>Resized <see cref="Image"/></returns>
         public static Image ResizeImage(Image img, int width, int height)
         {
             Bitmap b = new Bitmap(width, height);
@@ -183,11 +144,18 @@ namespace Photo_mozaic_ator
             return (Image)b;
         }
 
+        /// <summary>
+        /// Copies part of one bitmap to part of another bitmap-
+        /// </summary>
+        /// <param name="srcBitmap">Copy from this bitmap</param>
+        /// <param name="srcRegion">Copy this region</param>
+        /// <param name="destBitmap">Paste to this bitmap</param>
+        /// <param name="destRegion">Copy to this region</param>
         public static void CopyRegionIntoImage(Bitmap srcBitmap, Rectangle srcRegion, ref Bitmap destBitmap, Rectangle destRegion)
         {
-            using (Graphics grD = Graphics.FromImage(destBitmap))
+            using (Graphics g = Graphics.FromImage(destBitmap))
             {
-                grD.DrawImage(srcBitmap, destRegion, srcRegion, GraphicsUnit.Pixel);
+                g.DrawImage(srcBitmap, destRegion, srcRegion, GraphicsUnit.Pixel);
             }
         }
     }

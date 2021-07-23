@@ -6,8 +6,15 @@ using System.Text;
 
 namespace Photo_mozaic_ator
 {
+    /// <summary>
+    /// Class responsible for tile set creation.
+    /// </summary>
     class StoneGenerator
     {
+        /// <summary>
+        /// Calculates average color of tile and save it to file with #RRGGBB.bmp file name.
+        /// </summary>
+        /// <param name="imageNum">Sequential number of source image</param>
         public static void GenerateOneTile(int imageNum)
         {
             //load image
@@ -38,7 +45,7 @@ namespace Photo_mozaic_ator
             green /= Math.Max(1, tileSizeSquared - (blackPixels * AplicationStatus.ignoreBlackPixels));
             blue /= Math.Max(1, tileSizeSquared - (blackPixels * AplicationStatus.ignoreBlackPixels));
 
-            //snapping to 8*8*8 color pallete (512 colors)
+            //snapping to smaller color pallete to eliminate lot output colors
             red = (int)(red / AplicationStatus.snappingFactor);
             red = (int)(red * AplicationStatus.snappingFactor);
             green = (int)(green / AplicationStatus.snappingFactor);
