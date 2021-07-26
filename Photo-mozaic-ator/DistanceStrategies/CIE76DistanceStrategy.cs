@@ -44,6 +44,9 @@ namespace Photo_mozaic_ator.DistanceStrategies
         /// <returns></returns>
         public static float[] rgb2lab(float var_R, float var_G, float var_B)
         {
+            var_R /= 255.0f;
+            var_G /= 255.0f;
+            var_B /= 255.0f;
 
             float[] arr = new float[3];
             float B = Gamma(var_B);

@@ -352,6 +352,7 @@ namespace Photo_mozaic_ator
             {
                 SetStatus(tilesetSourceDialog.SelectedPath);
                 AplicationStatus.existingTilesetDir = tilesetSourceDialog.SelectedPath;
+                Mozaicator.matches.Clear();
             }
         }
         #endregion
@@ -382,6 +383,7 @@ namespace Photo_mozaic_ator
             if (double.TryParse(snappingFactorInput.Text, out newSnappingFactor))
             {
                 AplicationStatus.snappingFactor = newSnappingFactor;
+                Mozaicator.matches.Clear();
             }
             SetStatus($"snappingFactor = {AplicationStatus.snappingFactor}");
         }
@@ -409,6 +411,7 @@ namespace Photo_mozaic_ator
             int ignoreBlackPixels = ignoreBlackPixelsCheckBox.Checked ? 1 : 0;
             AplicationStatus.ignoreBlackPixels = ignoreBlackPixels;
             SetStatus($"ignoreBlackPixels = " + (AplicationStatus.ignoreBlackPixels == 1 ? "true" : "false"));
+            Mozaicator.matches.Clear();
         }
 
         /// <summary>
@@ -448,6 +451,7 @@ namespace Photo_mozaic_ator
                     SetStatus("Strategy not found");
                     break;
             }
+            Mozaicator.matches.Clear();
         }
         #endregion
     
