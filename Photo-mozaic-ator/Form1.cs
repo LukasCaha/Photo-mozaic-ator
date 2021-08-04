@@ -433,18 +433,19 @@ namespace Photo_mozaic_ator
             switch (colorDistanceDomain.Items.ToArray()[colorDistanceDomain.SelectedIndex])
             {
                 case "Square distance":
-                    //AplicationStatus.strategy = new SquareDistanceStrategy();
                     AplicationStatus.SetColorDistanceStrategy(new SquareDistanceStrategy());
                     SetStatus($"Chosen strategy is {AplicationStatus.strategy.ToString()}");
                     break;
                 case "Bitwise distance":
-                    //AplicationStatus.strategy = new BitwiseDistanceStrategy();
                     AplicationStatus.SetColorDistanceStrategy(new BitwiseDistanceStrategy());
                     SetStatus($"Chosen strategy is {AplicationStatus.strategy.ToString()}");
                     break;
                 case "CIE76 distance":
-                    //AplicationStatus.strategy = new CIE76DistanceStrategy();
                     AplicationStatus.SetColorDistanceStrategy(new CIE76DistanceStrategy());
+                    SetStatus($"Chosen strategy is {AplicationStatus.strategy.ToString()}");
+                    break;
+                case "CIE2000 distance":
+                    AplicationStatus.SetColorDistanceStrategy(new CIE2000DistanceStrategy());
                     SetStatus($"Chosen strategy is {AplicationStatus.strategy.ToString()}");
                     break;
                 default:

@@ -263,6 +263,7 @@ namespace Photo_mozaic_ator
             // colorDistanceDomain
             // 
             this.colorDistanceDomain.AllowDrop = true;
+            this.colorDistanceDomain.Items.Add("CIE2000 distance");
             this.colorDistanceDomain.Items.Add("Square distance");
             this.colorDistanceDomain.Items.Add("Bitwise distance");
             this.colorDistanceDomain.Items.Add("CIE76 distance");
