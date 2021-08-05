@@ -60,7 +60,7 @@ namespace Photo_mozaic_ator
             }
             else
             {
-                SetStatus("Program is busy");
+                SetStatus("Program is busy, it may be creating mozaic right now.");
             }
         }
 
@@ -185,7 +185,9 @@ namespace Photo_mozaic_ator
             else
             {
                 e.Result = generatedImage;
-                generatedImage.Save(AplicationStatus.GetOutputFile());
+                string outputFile = AplicationStatus.GetOutputFile();
+                generatedImage.Save(outputFile);
+                SetStatus($"saved to {outputFile}");
             }
         }
 
@@ -241,7 +243,7 @@ namespace Photo_mozaic_ator
             }
             else
             {
-                SetStatus("Program is busy");
+                SetStatus("Program is busy, it may be creating tileset right now.");
             }
         }
 
@@ -352,6 +354,8 @@ namespace Photo_mozaic_ator
             {
                 SetStatus(tilesetSourceDialog.SelectedPath);
                 AplicationStatus.existingTilesetDir = tilesetSourceDialog.SelectedPath;
+                //deletes cache
+                //if cache is not deleted it holds precalculated "best" tiles which are not "best" according to new setting
                 Mozaicator.matches.Clear();
             }
         }
@@ -383,6 +387,8 @@ namespace Photo_mozaic_ator
             if (double.TryParse(snappingFactorInput.Text, out newSnappingFactor))
             {
                 AplicationStatus.snappingFactor = newSnappingFactor;
+                //deletes cache
+                //if cache is not deleted it holds precalculated "best" tiles which are not "best" according to new setting
                 Mozaicator.matches.Clear();
             }
             SetStatus($"snappingFactor = {AplicationStatus.snappingFactor}");
@@ -411,6 +417,8 @@ namespace Photo_mozaic_ator
             int ignoreBlackPixels = ignoreBlackPixelsCheckBox.Checked ? 1 : 0;
             AplicationStatus.ignoreBlackPixels = ignoreBlackPixels;
             SetStatus($"ignoreBlackPixels = " + (AplicationStatus.ignoreBlackPixels == 1 ? "true" : "false"));
+            //deletes cache
+            //if cache is not deleted it holds precalculated "best" tiles which are not "best" according to new setting
             Mozaicator.matches.Clear();
         }
 
@@ -430,7 +438,9 @@ namespace Photo_mozaic_ator
         /// </summary>
         private void colorDistanceDomain_SelectedItemChanged(object sender, EventArgs e)
         {
-            switch (colorDistanceDomain.Items.ToArray()[colorDistanceDomain.SelectedIndex])
+            var strategiesArray = colorDistanceDomain.Items.ToArray();
+            int selectedIndex = colorDistanceDomain.SelectedIndex;
+            switch (strategiesArray[selectedIndex])
             {
                 case "Square distance":
                     AplicationStatus.SetColorDistanceStrategy(new SquareDistanceStrategy());
@@ -456,6 +466,8 @@ namespace Photo_mozaic_ator
                     SetStatus("Strategy not found");
                     break;
             }
+            //deletes cache
+            //if cache is not deleted it holds precalculated "best" tiles which are not "best" according to new setting
             Mozaicator.matches.Clear();
         }
         #endregion

@@ -12,10 +12,29 @@ namespace Photo_mozaic_ator
 
         public static string workingDirectory { get; set; }
 
+        /// <summary>
+        /// File to make mozaic from.
+        /// This variable holds path to the file.
+        /// </summary>
         public static string inputFile { get; set; }
+        /// <summary>
+        /// File where to put newly created mozaic.
+        /// This variable holds path to the file.
+        /// </summary>
         public static string outputFile;
+        /// <summary>
+        /// Directory where to put newly created tileset.
+        /// This variable holds path to the file.
+        /// </summary>
         public static string newTilesetDir;
+        /// <summary>
+        /// Directory from where to take tiles.
+        /// This variable holds path to the file.
+        /// </summary>
         public static string existingTilesetDir;
+        /// <summary>
+        /// Bitmap to hold created mozaic.
+        /// </summary>
         public static Bitmap outputImage { get; set; }
         /// <summary>
         /// Scales input image so result has more tiles.
