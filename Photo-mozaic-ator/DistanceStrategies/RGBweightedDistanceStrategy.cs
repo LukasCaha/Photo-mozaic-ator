@@ -20,9 +20,10 @@ namespace Photo_mozaic_ator.DistanceStrategies
             int Gsq = greenDifference * greenDifference;
             int Bsq = blueDifference * blueDifference;
 
+            //depending on average red value use different formula
             if (avgR < 128)
             {
-                return 2* Rsq + 4*Gsq + 3* Bsq;
+                return 2 * Rsq + 4 * Gsq + 3 * Bsq;
             }
             else
             {

@@ -7,13 +7,13 @@ namespace Photo_mozaic_ator.DistanceStrategies
 {
 
     /// <summary>
-    /// CIE 1976 distance implementation. Translates colros to XYZ and then Lab reprezentation. Takes square distance of Lab colors.
+    /// CIE 2000 distance implementation. Translates colors to Lab reprezentation. Then performs deltaE 2000 calculation.
     /// </summary>
     class CIE2000DistanceStrategy : IDistanceStrategy
     {
-        // CIE76 color distance
-        // rgb -> XYZ -> Lab
-        // compare 2 Lab colors with eucleideian norm
+        // CIE2000 color distance
+        // rgb -> Lab
+        // compare 2 Lab colors with deltaE2000 calculation
 
         public int Distance(Color a, Color b)
         {
@@ -68,23 +68,18 @@ namespace Photo_mozaic_ator.DistanceStrategies
         {
             return "CIE2000 Distance Strategy";
         }
-
-        ///----------------------------------------------------------NEW
-
-        private readonly double _l1S;
-        private readonly double _a1S;
-        private readonly double _b1S;
-
+        
         private const double Pi = Math.PI;
         private const double Pi2 = 2.0 * Math.PI;
 
         private const double kL = 1.0, kC = 1.0, kH = 1.0;
 
                 
-        /**
-         * Implementation of 
-         * "The CIEDE2000 Color-Difference Formula: Implementation Notes, Supplementary Test Data, and Mathematical Observations".
-         */
+        ///
+        ///<summary>
+        ///Implementation of 
+        ///"The CIEDE2000 Color-Difference Formula".
+        ///</summary>
         public double DE00(double _l1S, double _a1S, double _b1S, double l2s, double a2s, double b2s)
         {
             var mCs = (Math.Sqrt(_a1S * _a1S + _b1S * _b1S) + Math.Sqrt(a2s * a2s + b2s * b2s)) / 2.0;
