@@ -24,11 +24,13 @@ Because the program is written in WinForms framework it's mainly event driven. T
 
 ## Color distance strategies
 
-There are currently 3 available color distance metrics:
+There are currently 5 available color distance metrics:
 
 * Square RBG metric
 * Bitwise distance
 * CIE76 color metric
+* CIE2000 color metric
+* RGB weighted color metric
 
 ## How to work with program
 
