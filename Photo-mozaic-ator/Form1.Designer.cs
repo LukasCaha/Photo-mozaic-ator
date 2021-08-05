@@ -111,7 +111,7 @@ namespace Photo_mozaic_ator
             // 
             this.doneMozaic.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.doneMozaic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.doneMozaic.Image = ((System.Drawing.Image)(resources.GetObject("doneMozaic.Image")));
+            //this.doneMozaic.Image = ((System.Drawing.Image)(resources.GetObject("doneMozaic.Image")));
             this.doneMozaic.Location = new System.Drawing.Point(300, 45);
             this.doneMozaic.Name = "doneMozaic";
             this.doneMozaic.Size = new System.Drawing.Size(488, 375);
@@ -265,6 +265,7 @@ namespace Photo_mozaic_ator
             this.colorDistanceDomain.AllowDrop = true;
             this.colorDistanceDomain.Items.Add("CIE2000 distance");
             this.colorDistanceDomain.Items.Add("Square distance");
+            this.colorDistanceDomain.Items.Add("RGB weighted distance");
             this.colorDistanceDomain.Items.Add("Bitwise distance");
             this.colorDistanceDomain.Items.Add("CIE76 distance");
             this.colorDistanceDomain.Location = new System.Drawing.Point(13, 227);
@@ -294,7 +295,7 @@ namespace Photo_mozaic_ator
             this.Controls.Add(this.statusBar);
             this.Controls.Add(this.createMozaicButton);
             this.Controls.Add(this.titleLabel);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            //this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Photo-mozaic-ator";
             ((System.ComponentModel.ISupportInitialize)(this.doneMozaic)).EndInit();

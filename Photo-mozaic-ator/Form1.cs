@@ -436,6 +436,10 @@ namespace Photo_mozaic_ator
                     AplicationStatus.SetColorDistanceStrategy(new SquareDistanceStrategy());
                     SetStatus($"Chosen strategy is {AplicationStatus.strategy.ToString()}");
                     break;
+                case "RGB weighted distance":
+                    AplicationStatus.SetColorDistanceStrategy(new RGBweightedDistanceStrategy());
+                    SetStatus($"Chosen strategy is {AplicationStatus.strategy.ToString()}");
+                    break;
                 case "Bitwise distance":
                     AplicationStatus.SetColorDistanceStrategy(new BitwiseDistanceStrategy());
                     SetStatus($"Chosen strategy is {AplicationStatus.strategy.ToString()}");
